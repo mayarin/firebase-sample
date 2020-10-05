@@ -14,9 +14,54 @@
         <div id='logined' class='display_none'>
           <div class='col-12'>
 
-            <span id='user-email'></span>さん、ようこそ
+            <h1><span id='welcome'></span>さん、ようこそ</h1>
 
-            <div id='user_status_area'></div>
+            <form id='update_form'>
+              <h2>プロフィール更新</h2>
+              <div class="form-group">
+                <input type="text" class="form-control col-4" id='update_displayName' placeholder='ニックネーム...'/>
+              </div>
+              <div class="form-group">
+                <button class="btn btn-primary" type='submit'>反映</button>
+              </div>
+            </form>
+
+            <form id='update_mailaddress_form'>
+              <h2>メールアドレス変更</h2>
+              <div class="form-group">
+                <input type="email" class="form-control col-4" id='update_new_email' placeholder='新しいメールアドレス...'/>
+              </div>
+              <div class="form-group">
+                <input type="password" class="form-control col-4" id='update_email_password' placeholder='パスワード...'/>
+              </div>
+              <div class="form-group">
+                <button class="btn btn-primary" type='submit'>反映</button>
+              </div>
+            </form>
+
+            <form id='update_password_form'>
+              <h2>パスワード変更</h2>
+              <div class="form-group">
+                <input type="password" class="form-control col-4" id='update_now_password' placeholder='現在のパスワード...'/>
+              </div>
+              <div class="form-group">
+                <input type="password" class="form-control col-4" id='update_new_password' placeholder='新しいパスワード...'/>
+              </div>
+              <div class="form-group">
+                <button class="btn btn-primary" type='submit'>反映</button>
+              </div>
+            </form>
+
+            <form id='remove_account_form'>
+              <h2>アカウント削除</h2>
+              <div class="form-group">
+                <input type="password" class="form-control col-4" id='remove_account_password' placeholder='パスワード...'/>
+              </div>
+              <div class="form-group">
+                <button class="btn btn-danger" type='submit'>アカウント削除</button>
+              </div>
+            </form>
+
             <form id='logout_form'>
               <div class="form-group">
                 <button class="btn btn-primary" type='submit'>ログアウト</button>
@@ -30,10 +75,10 @@
             <form id='signin_form'>
               <h2>サインイン</h2>
               <div class="form-group">
-                <input type="email" class="form-control col-4" id='signin_email' placeholder='メールアドレス'/>
+                <input type="email" class="form-control col-4" id='signin_email' placeholder='メールアドレス...'/>
               </div>
               <div class="form-group">
-                <input type="password" type="password" class="form-control col-4" id='signin_password' placeholder='パスワード'>
+                <input type="password" type="password" class="form-control col-4" id='signin_password' placeholder='パスワード...'>
               </div>
               <div class="form-group">
                 <button class="btn btn-primary" type='submit'>サインイン</button>
@@ -46,11 +91,11 @@
             <h2>サインアップ</h2>
             <div class="form-group">
               <label>メールアドレス</label>
-              <input type="email" class="form-control col-4" id='signup_email' placeholder='メールアドレス'/>
+              <input type="email" class="form-control col-4" id='signup_email' placeholder='メールアドレス...'/>
             </div>
             <div class="form-group">
               <label>パスワード</label>
-              <input type="password" type="password" class="form-control col-4" id='signup_password' placeholder='パスワード'>
+              <input type="password" type="password" class="form-control col-4" id='signup_password' placeholder='パスワード...'>
             </div>
             <div class="form-group">
               <button class="btn btn-primary" type='submit'>サインアップ</button>
@@ -62,7 +107,7 @@
             <form id='reset_password_form'>
               <h2>パスワードをリセット</h2>
               <div class="form-group">
-                <input type="email" class="form-control col-4" id='reset_password_email' placeholder='メールアドレス'/>
+                <input type="email" class="form-control col-4" id='reset_password_email' placeholder='メールアドレス...'/>
               </div>
               <div class="form-group">
                 <button class="btn btn-primary" type='submit'>パスワード変更</button>
