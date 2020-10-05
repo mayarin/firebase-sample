@@ -18,13 +18,14 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 document.querySelector("#reset_password_form").addEventListener("submit", function(event) {
   var auth = firebase.auth();
-  var emailAddress = document.getElementById("reset_password_email").value;
+  var emailAddress = getElementValue("reset_password_email");
 
   auth.sendPasswordResetEmail(emailAddress).then(function() {
-    // Email sent.
+    alert('パスワード変更メールを発信しました。');
   }).catch(function(error) {
-    document.getElementById('reset_result_area').innerHTML = error;
-    console.log(error);
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    alert(errorCode + ', ' + errorMessage);
   });
 
   event.preventDefault();
@@ -32,16 +33,14 @@ document.querySelector("#reset_password_form").addEventListener("submit", functi
 
 document.querySelector("#signup_form").addEventListener("submit", function(event) {
   var auth = firebase.auth();
-  var emailAddress = document.getElementById("signup_email").value;
-  var password = document.getElementById("signup_password").value;
+  var emailAddress = getElementValue("signup_email");
+  var password = getElementValue("signup_password");
 
   firebase.auth().createUserWithEmailAndPassword(emailAddress, password).catch(function(error) {
     // Handle Errors here.
     var errorCode = error.code;
     var errorMessage = error.message;
     alert(errorCode + ', ' + errorMessage);
-    document.getElementById('signup_result_area').innerHTML = errorCode + ', ' + errorMessage;
-
   });
   event.preventDefault();
 
@@ -49,16 +48,14 @@ document.querySelector("#signup_form").addEventListener("submit", function(event
 
 document.querySelector("#signin_form").addEventListener("submit", function(event) {
   var auth = firebase.auth();
-  var emailAddress = document.getElementById("signin_email").value;
-  var password = document.getElementById("signin_password").value;
+  var emailAddress = getElementValue("signin_email");
+  var password = getElementValue("signin_password");
 
   firebase.auth().signInWithEmailAndPassword(emailAddress, password).catch(function(error) {
     // Handle Errors here.
     var errorCode = error.code;
     var errorMessage = error.message;
-    console.log(errorCode);
-    document.getElementById('signin_result_area').innerHTML = errorCode + ', ' + errorMessage;
-
+    alert(errorCode + ', ' + errorMessage);
   });
   event.preventDefault();
 
@@ -67,10 +64,17 @@ document.querySelector("#signin_form").addEventListener("submit", function(event
 document.querySelector("#logout_form").addEventListener("submit", function(event) {
   firebase.auth().onAuthStateChanged( (user) => {
     firebase.auth().signOut().then(()=>{
-      console.log("ログアウトしました");
+      alert("ログアウトしました");
     })
     .catch( (error)=>{
-      console.log(`ログアウト時にエラーが発生しました (${error})`);
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      alert(errorCode + ', ' + errorMessage);
     });
   });
+  event.preventDefault();
 }, false);
+
+function getElementValue(id){
+  return document.getElementById(id).value;
+}
