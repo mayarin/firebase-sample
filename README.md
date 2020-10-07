@@ -31,3 +31,7 @@ firebase hosting 上で javascriptを動作させ、以下の実装を行いま�
 ・firebase authにてメールアドレス・パスワードでのログインを利用する旨登録
 ・firebase storage
 ・cloud firestore
+
+## 作ったひと
+
+https://maya-pg.net/
