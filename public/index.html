@@ -1,9 +1,23 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>firebaseチャット試作品 - maya.pg.</title>
+    <meta name="description" content="firebaseチャットの試作を行いました。">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="./app.css">
+
+    <meta property="og:description" content="firebaseチャット試作品 - maya.pg."/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:url" content="https://myapp-7bf76.web.app/"/>
+    <meta property="og:image" content="https://myapp-7bf76.web.app/opg.png"/>
+    <meta property="og:site_name" content="maya.pg."/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:site" content="@maya_web"/>
+    <meta property="og:locale" content="ja_JP"/>
+    <meta property="fb:app_id" content="1235326906835166">
+
   </head>
 
   <body>
@@ -11,22 +25,61 @@
     <div class="row m-0">
       <div class="col">
 
-        <div id='logined' class='display_none'>
+        <div id='logined' class='d-none'>
           <div class='col-12'>
+            <h1><img src='./unnamed.png' class='profile_picture' id='header_picture'><span id='welcome'></span></h1>
 
-            <h1><span id='welcome'></span>さん、ようこそ</h1>
+            <div id='chat_area'>
 
-            <form id='update_form'>
+              <div id='chat_window'>
+                <span id='any_chat_parts_template'>
+                <div class='any_chat_parts chat_parts'>
+                  <div class='chat_message col-6'>replace_to_message</div>
+                  <div class='chat_datetime col-4'>replace_to_datetime<br>
+                    <img class='profile_picture' src='./unnamed.png'><br>replace_to_name
+                  </div>
+                </div>
+                </span>
+
+                <span id='my_chat_parts_template'>
+                <div class='my_chat_parts chat_parts'>
+                  <div class='chat_message col-6'>replace_to_message</div>
+                  <div class='chat_datetime col-4'>replace_to_datetime<br>
+                    <img class='profile_picture' src='./unnamed.png'><br>replace_to_name </div>
+                </div>
+                </span>
+
+              </div>
+              <form id='chat_form'>
+                <textarea class="form-control col-12" id='chat_message' placeholder='メッセージ...'></textarea>
+                <button class="btn btn-primary" type='submit'>ポスト</button>
+              </form>
+            </div>
+
+            <form id='update_form' class='d-none'>
               <h2>プロフィール更新</h2>
               <div class="form-group">
+                <label for='update_displayName'>ニックネーム</label>
                 <input type="text" class="form-control col-4" id='update_displayName' placeholder='ニックネーム...'/>
+              </div>
+              <div class="form-group">
+                <label>プロフィール画像</label>
+              </div>
+              <div class="form-group">
+                <label for='update_picture'><span class='btn btn-primary'>画像を選択...</span>
+                  <input type="file" class="form-control col-4 d-none" id='update_picture' placeholder='プロフィール画像...' onchange='previewImage(this)' />
+                  <p>
+                    Preview:<br>
+                    <img id="preview" src="./unnamed.png" class='profile_picture'>
+                  </p>
+                </label>
               </div>
               <div class="form-group">
                 <button class="btn btn-primary" type='submit'>反映</button>
               </div>
             </form>
 
-            <form id='update_mailaddress_form'>
+            <form id='update_mailaddress_form' class='d-none'>
               <h2>メールアドレス変更</h2>
               <div class="form-group">
                 <input type="email" class="form-control col-4" id='update_new_email' placeholder='新しいメールアドレス...'/>
@@ -39,7 +92,7 @@
               </div>
             </form>
 
-            <form id='update_password_form'>
+            <form id='update_password_form' class='d-none'>
               <h2>パスワード変更</h2>
               <div class="form-group">
                 <input type="password" class="form-control col-4" id='update_now_password' placeholder='現在のパスワード...'/>
@@ -52,7 +105,7 @@
               </div>
             </form>
 
-            <form id='remove_account_form'>
+            <form id='remove_account_form' class='d-none'>
               <h2>アカウント削除</h2>
               <div class="form-group">
                 <input type="password" class="form-control col-4" id='remove_account_password' placeholder='パスワード...'/>
@@ -62,14 +115,15 @@
               </div>
             </form>
 
-            <form id='logout_form'>
+            <form id='logout_form' class='d-none'>
               <div class="form-group">
                 <button class="btn btn-primary" type='submit'>ログアウト</button>
               </div>
             </form>
           </div>
         </div>
-        <div id='no_login' class='display_block'>
+
+        <div id='no_login' class='d-none'>
 
           <div class='col-12'>
             <form id='signin_form'>
@@ -126,6 +180,8 @@
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="/__/firebase/7.22.0/firebase-app.js"></script>
     <script src="/__/firebase/7.22.0/firebase-auth.js"></script>
+    <script src="/__/firebase/7.22.0/firebase-storage.js"></script>
+    <script src="/__/firebase/7.22.0//firebase-firestore.js"></script>
 
     <!-- TODO: Add SDKs for Firebase products that you want to use
         https://firebase.google.com/docs/web/setup#available-libraries -->

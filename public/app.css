@@ -1,0 +1,56 @@
+.profile_picture {
+  background-position: center ;
+  background-size:cover;
+  border-radius: 50%;
+  width:50px;
+  height:50px;
+  margin:5px;
+}
+
+.h1 {
+  font-size: medium;
+}
+
+.any_chat_parts .chat_message{
+  background-color: lightblue;
+  margin-right: auto;
+}
+
+.my_chat_parts .chat_message{
+  background-color: lightpink;
+  margin-left: auto;
+}
+
+#chat_window {
+  border:1px solid gray;
+  border-radius: 5px;
+  height:500px;
+  padding: 10px;
+  overflow: scroll;
+}
+
+#preview {
+  width:200px !important;
+  height:200px !important;
+}
+
+.chat_message {
+  /* border:1px solid gray; */
+  border-radius: 5px;
+  padding: 10px;
+  margin:10px;
+}
+
+.any_chat_parts .chat_datetime {
+  margin-top: -10px;
+  font-size: small;
+  text-align: left;
+  margin-right: auto;
+}
+
+.my_chat_parts .chat_datetime {
+  font-size: small;
+  text-align: right;
+  margin-left: auto;
+}
+
