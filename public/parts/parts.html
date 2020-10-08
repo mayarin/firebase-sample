@@ -1,0 +1,154 @@
+
+<div class="pos-f-t">
+  <div class="collapse" id="navbarToggleExternalContent">
+    <div class="bg-light p-4 boxContainer">
+      <div class='box margin-5'>
+        <a href='#update_area' class='btn btn-primary'>プロフィール更新</a>
+      </div>
+      <div class='box margin-5'>
+        <a href='#update_mailaddress_area' class='btn btn-primary'>メールアドレス変更</a>
+      </div>
+      <div class='box margin-5'>
+        <a href='#update_password_area' class='btn btn-primary'>パスワード変更</a>
+      </div>
+      <div class='box margin-5'>
+        <a href='#remove_account_area' class='btn btn-primary'>アカウント削除</a>
+      </div>
+      <div class='box margin-5'>
+        <form id='logout_form'>
+          <div class="form-group">
+            <button class="btn btn-primary" type='submit'>ログアウト</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <nav class="navbar navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <h1><img src='/assets/img/unnamed.png' class='profile_picture' id='header_picture'><span id='welcome'></span></h1>
+  </nav>
+</div>
+
+<div id='chat_area' class="cd-fixed-bg">
+
+  <div id='chat_window' class='container'>
+    <span id='any_chat_parts_template' class='d-none'>
+    <div class='any_chat_parts chat_parts'>
+      <div class='chat_message col-6'>replace_to_message</div>
+      <div class='chat_datetime col-4'>replace_to_datetime<br>
+        <img class='profile_picture' src='/assets/img/unnamed.png'><br>replace_to_name
+      </div>
+    </div>
+    </span>
+
+    <span id='my_chat_parts_template' class='d-none'>
+    <div class='my_chat_parts chat_parts'>
+      <div class='chat_message col-6'>replace_to_message</div>
+      <div class='chat_datetime col-4'>replace_to_datetime<br>
+        <img class='profile_picture' src='/assets/img/unnamed.png'><br>replace_to_name </div>
+    </div>
+    </span>
+
+  </div>
+  <div id='chat_form_div' class='container boxContainer'>
+    <form id='chat_form'>
+      <textarea class="form-control box" id='chat_message' placeholder='メッセージ...'></textarea>
+      <button class="btn btn-primary box" type='submit'>ポスト</button>
+    </form>
+  </div>
+</div>
+
+<a id='update_area'></a>
+<div id='' class="cd-fixed-bg">
+  <div class="cd-container container-settings padding-top-60">
+    <form id='update_form'>
+      <h2>プロフィール更新</h2>
+      <div class="form-group">
+        <label for='update_displayName'>ニックネーム</label>
+        <input type="text" class="form-control" id='update_displayName' placeholder='ニックネーム...'/>
+      </div>
+      <div class="form-group">
+        <label>プロフィール画像</label>
+      </div>
+      <div class="form-group">
+        <label for='update_picture'><span class='btn btn-primary'>画像を選択...</span>
+          <input type="file" class="form-control d-none" id='update_picture' placeholder='プロフィール画像...' onchange='previewImage(this)' />
+          <p>
+            Preview:<br>
+            <img id="preview" src="/assets/img/unnamed.png" class='profile_picture'>
+          </p>
+        </label>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary" type='submit'>反映</button>
+      </div>
+      <div class="form-group">
+        <a href='#top'>トップへ戻る</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<a id='update_mailaddress_area'></a>
+<div id='' class="cd-fixed-bg">
+  <div class="cd-container container-settings">
+    <form id='update_mailaddress_form'>
+      <h2>メールアドレス変更</h2>
+      <div class="form-group">
+        <input type="email" class="form-control" id='update_new_email' placeholder='新しいメールアドレス...'/>
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" id='update_email_password' placeholder='パスワード...'/>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary" type='submit'>反映</button>
+      </div>
+      <div class="form-group">
+        <a href='#top'>トップへ戻る</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<a id='update_password_area'></a>
+<div id='' class="cd-fixed-bg">
+  <div class="cd-container container-settings">
+    <form id='update_password_form'>
+    <h2>パスワード変更</h2>
+    <div class="form-group">
+      <input type="password" class="form-control" id='update_now_password' placeholder='現在のパスワード...'/>
+    </div>
+    <div class="form-group">
+      <input type="password" class="form-control" id='update_new_password' placeholder='新しいパスワード...'/>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary" type='submit'>反映</button>
+    </div>
+    <div class="form-group">
+      <a href='#top'>トップへ戻る</a>
+    </div>
+    </form>
+  </div>
+</div>
+
+<a id='remove_account_area'></a>
+<div id=''  class="cd-fixed-bg">
+  <div class="cd-container container-settings">
+    <form id='remove_account_form'>
+      <h2>アカウント削除</h2>
+      <div class="form-group">
+        <input type="password" class="form-control" id='remove_account_password' placeholder='パスワード...'/>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-danger" type='submit'>アカウント削除</button>
+      </div>
+      <div class="form-group">
+        <a href='#top'>トップへ戻る</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+

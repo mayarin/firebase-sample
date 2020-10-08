@@ -4,8 +4,7 @@ var my_chat_parts = getElemID('my_chat_parts_template').innerHTML;
 getElemID('any_chat_parts_template').remove();
 getElemID('my_chat_parts_template').remove();
 
-console.log(any_chat_parts);
-console.log(my_chat_parts);
+fadeIn(document.body, 20);
 
 // ログイン判別
 firebase.auth().onAuthStateChanged(function(user) {
@@ -47,7 +46,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         line = line.replace('replace_to_message', message.message);
         line = line.replace('replace_to_datetime', message.datetime);
         line = line.replace('replace_to_name', message.name);
-        line = line.replace('./unnamed.png', message.picture);
+        line = line.replace('/assets/img/unnamed.png', message.picture);
         getElemID('chat_window').innerHTML += line;
 
       });
@@ -57,16 +56,6 @@ firebase.auth().onAuthStateChanged(function(user) {
     getElemID('update_displayName').value = user.displayName;
     getElemID('preview').src = user.photoURL;
     getElemID('header_picture').src = user.photoURL;
-
-    getElemID('logined').classList.add('d-block');
-    getElemID('logined').classList.remove('d-none');
-    getElemID('no_login').classList.add('d-none');
-  } else {
-    // getElemID('logined').className = 'd-none';
-    // getElemID('no_login').className = 'd-block';
-    getElemID('logined').classList.remove('d-block');
-    getElemID('logined').classList.add('d-none');
-    getElemID('no_login').classList.remove('d-none');
   }
 });
 
@@ -284,61 +273,6 @@ document.querySelector("#remove_account_form").addEventListener("submit", functi
   event.preventDefault();
 }, false);
 
-
-
-
-
-// パスワード変更リンク取得
-document.querySelector("#reset_password_form").addEventListener("submit", function(event) {
-  if(confirm('パスワード変更リンクを送信します。よろしいですか？')){
-    var auth = firebase.auth();
-    var emailAddress = getElementValue("reset_password_email");
-
-    auth.sendPasswordResetEmail(emailAddress).then(function() {
-      alert('パスワード変更リンクを送信しました。');
-      firebase.auth().signOut();
-    }).catch(function(error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      alert(errorCode + ', ' + errorMessage);
-    });
-  }
-  event.preventDefault();
-}, false);
-
-// サインアップ
-document.querySelector("#signup_form").addEventListener("submit", function(event) {
-  var auth = firebase.auth();
-  var emailAddress = getElementValue("signup_email");
-  var password = getElementValue("signup_password");
-
-  firebase.auth().createUserWithEmailAndPassword(emailAddress, password).catch(function(error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    alert(errorCode + ', ' + errorMessage);
-  });
-  event.preventDefault();
-
-}, false);
-
-// アカウント登録
-document.querySelector("#signin_form").addEventListener("submit", function(event) {
-  if(confirm('アカウントを登録します。よろしいですか？')){
-    var auth = firebase.auth();
-    var emailAddress = getElementValue("signin_email");
-    var password = getElementValue("signin_password");
-
-    firebase.auth().signInWithEmailAndPassword(emailAddress, password).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      alert(errorCode + ', ' + errorMessage);
-    });
-  }
-  event.preventDefault();
-}, false);
-
 // ログアウト
 document.querySelector("#logout_form").addEventListener("submit", function(event) {
   if(confirm('ログアウトします。よろしいですか？')){
@@ -377,3 +311,8 @@ function previewImage(obj)
 	});
 	fileReader.readAsDataURL(obj.files[0]);
 }
+
+
+
+
+

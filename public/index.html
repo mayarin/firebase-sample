@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="./app.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
 
     <meta property="og:description" content="firebaseチャット試作品 - maya.pg."/>
     <meta property="og:type" content="article"/>
@@ -21,157 +21,97 @@
   </head>
 
   <body>
-
-    <div class="row m-0">
-      <div class="col">
-
-        <div id='logined' class='d-none'>
-          <div class='col-12'>
-            <h1><img src='./unnamed.png' class='profile_picture' id='header_picture'><span id='welcome'></span></h1>
-
-            <div id='chat_area'>
-
-              <div id='chat_window'>
-                <span id='any_chat_parts_template'>
-                <div class='any_chat_parts chat_parts'>
-                  <div class='chat_message col-6'>replace_to_message</div>
-                  <div class='chat_datetime col-4'>replace_to_datetime<br>
-                    <img class='profile_picture' src='./unnamed.png'><br>replace_to_name
-                  </div>
-                </div>
-                </span>
-
-                <span id='my_chat_parts_template'>
-                <div class='my_chat_parts chat_parts'>
-                  <div class='chat_message col-6'>replace_to_message</div>
-                  <div class='chat_datetime col-4'>replace_to_datetime<br>
-                    <img class='profile_picture' src='./unnamed.png'><br>replace_to_name </div>
-                </div>
-                </span>
-
-              </div>
-              <form id='chat_form'>
-                <textarea class="form-control col-12" id='chat_message' placeholder='メッセージ...'></textarea>
-                <button class="btn btn-primary" type='submit'>ポスト</button>
-              </form>
-            </div>
-
-            <form id='update_form' class='d-none'>
-              <h2>プロフィール更新</h2>
-              <div class="form-group">
-                <label for='update_displayName'>ニックネーム</label>
-                <input type="text" class="form-control col-4" id='update_displayName' placeholder='ニックネーム...'/>
-              </div>
-              <div class="form-group">
-                <label>プロフィール画像</label>
-              </div>
-              <div class="form-group">
-                <label for='update_picture'><span class='btn btn-primary'>画像を選択...</span>
-                  <input type="file" class="form-control col-4 d-none" id='update_picture' placeholder='プロフィール画像...' onchange='previewImage(this)' />
-                  <p>
-                    Preview:<br>
-                    <img id="preview" src="./unnamed.png" class='profile_picture'>
-                  </p>
-                </label>
-              </div>
-              <div class="form-group">
-                <button class="btn btn-primary" type='submit'>反映</button>
-              </div>
-            </form>
-
-            <form id='update_mailaddress_form' class='d-none'>
-              <h2>メールアドレス変更</h2>
-              <div class="form-group">
-                <input type="email" class="form-control col-4" id='update_new_email' placeholder='新しいメールアドレス...'/>
-              </div>
-              <div class="form-group">
-                <input type="password" class="form-control col-4" id='update_email_password' placeholder='パスワード...'/>
-              </div>
-              <div class="form-group">
-                <button class="btn btn-primary" type='submit'>反映</button>
-              </div>
-            </form>
-
-            <form id='update_password_form' class='d-none'>
-              <h2>パスワード変更</h2>
-              <div class="form-group">
-                <input type="password" class="form-control col-4" id='update_now_password' placeholder='現在のパスワード...'/>
-              </div>
-              <div class="form-group">
-                <input type="password" class="form-control col-4" id='update_new_password' placeholder='新しいパスワード...'/>
-              </div>
-              <div class="form-group">
-                <button class="btn btn-primary" type='submit'>反映</button>
-              </div>
-            </form>
-
-            <form id='remove_account_form' class='d-none'>
-              <h2>アカウント削除</h2>
-              <div class="form-group">
-                <input type="password" class="form-control col-4" id='remove_account_password' placeholder='パスワード...'/>
-              </div>
-              <div class="form-group">
-                <button class="btn btn-danger" type='submit'>アカウント削除</button>
-              </div>
-            </form>
-
-            <form id='logout_form' class='d-none'>
-              <div class="form-group">
-                <button class="btn btn-primary" type='submit'>ログアウト</button>
-              </div>
-            </form>
+    <main id='loading'>
+      <div class="cd-fixed-bg cd-bg-1">
+        <div class='container'>
+          <h1 class='text-center'> <img src='/assets/img/icon_loader.gif'><br>Loading ... </h1>
+        </div>
+      </div>
+    </main>
+    <main id='main'>
+      <a id='top'></a>
+      <div class="cd-fixed-bg cd-bg-1">
+        <div class='container padding-top-300'>
+          <h1 class='text-center'> - Chat Service- </h1>
+          <div class='text-center'>
+          <a class="btn btn-primary" href='#signin'>サインイン</a>
+          <a class="btn btn-primary" href='#signup'>サインアップ</a>
           </div>
         </div>
+      </div>
 
-        <div id='no_login' class='d-none'>
-
-          <div class='col-12'>
-            <form id='signin_form'>
-              <h2>サインイン</h2>
-              <div class="form-group">
-                <input type="email" class="form-control col-4" id='signin_email' placeholder='メールアドレス...'/>
-              </div>
-              <div class="form-group">
-                <input type="password" type="password" class="form-control col-4" id='signin_password' placeholder='パスワード...'>
-              </div>
-              <div class="form-group">
-                <button class="btn btn-primary" type='submit'>サインイン</button>
-              </div>
-            </form>
-          </div>
-
-          <div class='col-12'>
-            <form id='signup_form'>
-            <h2>サインアップ</h2>
+      <a id='signin'></a>
+      <div class="cd-scrolling-bg cd-color-1">
+        <div class="cd-container container-login">
+          <form id='signin_form'>
+            <h2>サインイン</h2>
             <div class="form-group">
-              <label>メールアドレス</label>
-              <input type="email" class="form-control col-4" id='signup_email' placeholder='メールアドレス...'/>
+              <input type="email" class="form-control" id='signin_email' placeholder='メールアドレス...'/>
             </div>
             <div class="form-group">
-              <label>パスワード</label>
-              <input type="password" type="password" class="form-control col-4" id='signup_password' placeholder='パスワード...'>
+              <input type="password" class="form-control" id='signin_password' placeholder='パスワード...'>
+            </div>
+            <div class="form-group">
+              <button class="btn btn-primary" type='submit'>サインイン</button>
+            </div>
+            <div class="form-group">
+              <a href='#reminder'>パスワードを忘れた方</a>
+            </div>
+            <div class="form-group">
+              <a href='#top'>トップへ戻る</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <a id='signup'></a>
+      <div class="cd-scrolling-bg cd-color-2">
+        <div class="cd-container container-login">
+          <form id='signup_form'>
+            <h2>サインアップ</h2>
+            <div class="form-group">
+              <input type="email" class="form-control" id='signup_email' placeholder='メールアドレス...'/>
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" id='signup_password' placeholder='パスワード...'>
             </div>
             <div class="form-group">
               <button class="btn btn-primary" type='submit'>サインアップ</button>
             </div>
-            </form>
-          </div>
-
-          <div class='col-12'>
-            <form id='reset_password_form'>
-              <h2>パスワードをリセット</h2>
-              <div class="form-group">
-                <input type="email" class="form-control col-4" id='reset_password_email' placeholder='メールアドレス...'/>
-              </div>
-              <div class="form-group">
-                <button class="btn btn-primary" type='submit'>パスワード変更</button>
-              </div>
-            </form>
-          </div>
-
+            <div class="form-group">
+              <a href='#signin''>サインイン</a>
+            </div>
+            <div class="form-group">
+              <a href='#top'>トップへ戻る</a>
+            </div>
+          </form>
         </div>
       </div>
-    </div>
+
+      <a id='reminder'></a>
+      <div class="cd-scrolling-bg cd-color-3">
+        <div class="cd-container container-login">
+          <form id='reset_password_form'>
+            <h2>パスワードをリセット</h2>
+            <div class="form-group">
+              <input type="email" class="form-control" id='reset_password_email' placeholder='メールアドレス...'/>
+            </div>
+            <div class="form-group">
+              <button class="btn btn-primary" type='submit'>パスワード変更</button>
+            </div>
+            <div class="form-group">
+              <a href='#signin'>サインイン</a>
+            </div>
+            <div class="form-group">
+              <a href='#signup' >サインアップ</a>
+            </div>
+            <div class="form-group">
+              <a href='#top'>トップへ戻る</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -188,7 +128,8 @@
 
     <!-- Initialize Firebase -->
     <script src="/__/firebase/init.js"></script>
-    <script src="./app.js"></script>
+    <!-- <script src="/assets/js/app.js"></script> -->
+    <script src="/assets/js/nologin.js"></script>
 
   </body>
 </html>

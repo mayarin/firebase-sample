@@ -1,0 +1,158 @@
+
+body, html, main {
+  /* important */
+  height: 100%;
+}
+
+body {overflow-y:hidden;}
+
+main {
+  opacity : 0;
+}
+
+.cd-fixed-bg {
+  min-height: 100%;
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.cd-fixed-bg.cd-bg-1 {
+  background-image: url("/assets/img/index.jpg");
+}
+
+.cd-scrolling-bg {
+  min-height: 100%;
+}
+
+.container {
+  padding-top:300px;
+  width: calc(100% - 2*var(--component-padding));
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-login {
+  padding-top:200px;
+  max-width: 400px;
+  text-align:center;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left : 10px;
+  padding-right : 10px;
+}
+
+.container-settings {
+  padding-top:100px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left : 10px;
+  padding-right : 10px;
+  /* opacity:0; */
+}
+
+.padding-top-60 {
+  padding-top:60px !important;
+}
+
+.cd-color-2 {
+  background-color: lightsteelblue;
+}
+
+.cd-color-3 {
+  background-color: lightgray;
+}
+
+
+
+
+.profile_picture {
+  background-position: center ;
+  background-size:cover;
+  border-radius: 50%;
+  width:50px;
+  height:50px;
+  margin:5px;
+}
+
+.h1 {
+  font-size: medium;
+}
+
+.any_chat_parts .chat_message{
+  background-color: lightblue;
+  margin-right: auto;
+}
+
+.my_chat_parts .chat_message{
+  background-color: lightpink;
+  margin-left: auto;
+}
+
+#chat_window {
+  border:1px solid gray;
+  border-radius: 5px;
+  height:600px;
+  min-height: 80%;
+  padding: 10px;
+  overflow-x: scroll;
+  max-width: 700px;
+  margin-top : 10px;
+}
+
+#preview {
+  width:200px !important;
+  height:200px !important;
+}
+
+.chat_message {
+  /* border:1px solid gray; */
+  border-radius: 5px;
+  padding: 10px;
+  margin:10px;
+}
+
+.any_chat_parts .chat_datetime {
+  margin-top: -10px;
+  font-size: small;
+  text-align: left;
+  margin-right: auto;
+}
+
+.my_chat_parts .chat_datetime {
+  font-size: small;
+  text-align: right;
+  margin-left: auto;
+}
+
+#chat_form_div {
+  padding-top:5px !important;
+  max-width: 700px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+#chat_form_div button {
+  margin-left: 1%;
+  margin-right: auto;
+}
+
+#chat_message {
+  max-width: 80%;
+}
+
+.box{
+  float: left;
+}
+
+.margin-5{
+  margin: 5px;
+}
+
+.boxContainer{
+  overflow: hidden;
+}
+
+
