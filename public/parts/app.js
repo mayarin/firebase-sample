@@ -1,8 +1,10 @@
 var any_chat_parts = getElemID('any_chat_parts_template').innerHTML;
 var my_chat_parts = getElemID('my_chat_parts_template').innerHTML;
+var users_parts = getElemID('users_parts_template').innerHTML;
 
 getElemID('any_chat_parts_template').remove();
 getElemID('my_chat_parts_template').remove();
+getElemID('users_parts_template').remove();
 
 fadeIn(document.body, 20);
 
@@ -23,17 +25,15 @@ firebase.auth().onAuthStateChanged(function(user) {
       getElemID('welcome').innerHTML = user.displayName;
     }
 
-    var query = firebase.firestore()
+    var openchats_query = firebase.firestore()
     .collection('openchats')
     .orderBy('datetime', 'asc');
 
     // Start listening to the query.
-    query.onSnapshot(function(snapshot) {
+    openchats_query.onSnapshot(function(snapshot) {
       snapshot.docChanges().forEach(function(change) {
         console.log(change.type);
         var message = change.doc.data();
-        console.log(change.doc.id);
-        console.log(message.uid);
 
         var line = '';
 
@@ -51,17 +51,60 @@ firebase.auth().onAuthStateChanged(function(user) {
 
       });
       getElemID('chat_window').scrollTop = getElemID('chat_window').scrollHeight;
+    }, function(error) {
+      console.log(error.message );
+      // location.reload();
+    });
+
+    var users_query = firebase.firestore()
+    .collection('users')
+    .orderBy('uid', 'asc');
+
+    // Start listening to the query.
+    users_query.onSnapshot(function(snapshot) {
+      snapshot.docChanges().forEach(function(change) {
+        var message = change.doc.data();
+        var line = users_parts;
+
+        if(message.uid != user.uid){
+          line = line.replace('replace_to_introduce', message.introduce);
+          line = line.replace('replace_to_gender', message.gender);
+          line = line.replace('replace_to_name', message.name);
+          line = line.replace('/assets/img/unnamed.png', message.picture);
+          getElemID('users_window').innerHTML += line;
+        }
+
+      });
+    }, function(error) {
+      console.log(error.message );
+      // location.reload();
     });
 
     getElemID('update_displayName').value = user.displayName;
     getElemID('preview').src = user.photoURL;
     getElemID('header_picture').src = user.photoURL;
+
+    if(user.photoURL == null){
+      alert('ご利用前にプロフィールを登録してください。');
+      window.location.hash = "update_area";
+    }
   }
 });
 
 firebase.auth().languageCode = 'ja';
 
+document.querySelector("#chat_message").addEventListener("keydown", function(event) {
+  if (((event.ctrlKey && !event.metaKey) || (!event.ctrlKey && event.metaKey)) && event.keyCode == 13) {
+    submitPost();
+  }
+});
+
 document.querySelector("#chat_form").addEventListener("submit", function(event) {
+  submitPost();
+  event.preventDefault();
+});
+
+function submitPost(){
   var user = firebase.auth().currentUser;
   var db = firebase.firestore();
   var date = new Date();
@@ -72,11 +115,15 @@ document.querySelector("#chat_form").addEventListener("submit", function(event) 
                 ( '00' + date.getMinutes() ).slice( -2 ) + ':' +
                 ( '00' + date.getSeconds() ).slice( -2 );
 
+  var chat_message = getElementValue('chat_message');
+  chat_message = chat_message.replace(/\r\n/g, "<br />");
+  chat_message = chat_message.replace(/(\n|\r)/g, "<br />");
+
   // Add a new document in collection "cities"
   db.collection("openchats").doc().set({
     uid: user.uid,
     name: user.displayName,
-    message: getElementValue('chat_message'),
+    message: chat_message,
     picture: user.photoURL,
     datetime : datetime
   })
@@ -87,7 +134,13 @@ document.querySelector("#chat_form").addEventListener("submit", function(event) 
   .catch(function(error) {
     console.error("Error writing document: ", error);
   });
-  event.preventDefault();
+}
+
+
+document.querySelectorAll('.menu_auto_close').forEach(function (button) {
+  button.addEventListener('click', function(event) {
+    document.getElementById('cp_menu_bar1').click();
+  });
 });
 
 // プロフィール更新
@@ -146,13 +199,35 @@ document.querySelector("#update_form").addEventListener("submit", function(event
 function updateProfile(photoURL){
   var user = firebase.auth().currentUser;
   var displayName = getElementValue('update_displayName');
+  var gender = getElementValue('update_gender');
+  var introduce = getElementValue('update_introduce');
 
   user.updateProfile({
-    displayName : getElementValue('update_displayName'),
+    displayName : displayName,
     photoURL : photoURL
   }).then(function() {
-    alert('プロフィールを更新しました。');
-    location.reload();
+
+    var db = firebase.firestore();
+
+    db.collection("users").doc(user.uid).set({
+      uid: user.uid,
+      name: user.displayName,
+      gender: gender,
+      introduce: introduce,
+      picture: photoURL,
+    })
+    .then(function() {
+      console.log("Document successfully written!");
+      document.getElementById('chat_message').value = '';
+
+      alert('プロフィールを更新しました。');
+      location.reload();
+
+    })
+    .catch(function(error) {
+      console.error("Error writing document: ", error);
+    });
+
   }).catch(function(error) {
     var errorCode = error.code;
     var errorMessage = error.message;
@@ -206,6 +281,11 @@ document.querySelector("#update_mailaddress_form").addEventListener("submit", fu
 
 // パスワード変更
 document.querySelector("#update_password_form").addEventListener("submit", function(event) {
+  if(getElementValue('update_now_password') != getElementValue('update_verify_password')){
+    alert('「新しいパスワード」と「新しいパスワード（確認）」が一致しません。');
+    return null;
+  }
+
   if(confirm('パスワードを変更します。よろしいですか？')){
     document.querySelector('#update_password_form button').setAttribute('disabled', true);
     document.querySelector('#update_password_form button').innerText = '反映中...';
@@ -274,20 +354,20 @@ document.querySelector("#remove_account_form").addEventListener("submit", functi
 }, false);
 
 // ログアウト
-document.querySelector("#logout_form").addEventListener("submit", function(event) {
+document.querySelector("#logout_form").addEventListener("click", function(event) {
   if(confirm('ログアウトします。よろしいですか？')){
-    firebase.auth().onAuthStateChanged( (user) => {
-      firebase.auth().signOut().then(()=>{
-        alert("ログアウトしました");
-      })
-      .catch( (error)=>{
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        alert(errorCode + ', ' + errorMessage);
-      });
+    firebase.auth().signOut().then(()=>{
+      console.log('L282');
+      alert("ログアウトしました。");
+      location.reload();
+    })
+    .catch( (error)=>{
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      alert(errorCode + ', ' + errorMessage);
     });
-  }
     event.preventDefault();
+  }
 }, false);
 
 function getElementValue(id){

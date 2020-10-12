@@ -21,6 +21,7 @@ document.querySelector("#reset_password_form").addEventListener("submit", functi
       alert(errorCode + ', ' + errorMessage);
     });
   }
+  window.location.hash = "reminder";
   event.preventDefault();
 }, false);
 
@@ -37,6 +38,7 @@ document.querySelector("#signup_form").addEventListener("submit", function(event
       var errorMessage = error.message;
       alert(errorCode + ', ' + errorMessage);
     });
+    window.location.hash = "signup";
     event.preventDefault();
   }
 }, false);
@@ -53,25 +55,27 @@ document.querySelector("#signin_form").addEventListener("submit", function(event
     var errorMessage = error.message;
     alert(errorCode + ', ' + errorMessage);
   });
+  window.location.hash = "signin";
   event.preventDefault();
 }, false);
 
 
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
-
     var xhr = new XMLHttpRequest(),
       method = "GET",
       url = "parts/parts.html";//読み込まれるHTMLを指定
-    var box = getElemID('main');//読み込みたい位置を指定
+    var box = getElemID('main_contents');//読み込みたい位置を指定
 
     xhr.open(method, url, true);
     xhr.onreadystatechange = function () {
       if(xhr.readyState === 4 && xhr.status === 200) {
         fadeOut(getElemID('loading'), 50);
-        fadeIn(getElemID('main'), 100);
+        fadeIn(getElemID('main_contents'), 100);
         var restxt=xhr.responseText;//String型で取得
-        box.innerHTML = restxt;//完了
+
+        document.body.innerHTML = restxt;//完了
+        window.location.hash = "top";
 
         loadScript("/parts/app.js", function() {
           console.log('script loaded');
@@ -85,7 +89,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     xhr.send();
   } else {
     fadeOut(getElemID('loading'), 50);
-    fadeIn(getElemID('main'), 100);
+    fadeIn(getElemID('main_contents'), 100);
     console.log('L109');
   }
 });

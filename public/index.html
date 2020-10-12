@@ -5,7 +5,7 @@
     <meta name="description" content="firebaseチャットの試作を行いました。">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="/assets/css/app.css">
 
     <meta property="og:description" content="firebaseチャット試作品 - maya.pg."/>
@@ -21,93 +21,102 @@
   </head>
 
   <body>
-    <main id='loading'>
-      <div class="cd-fixed-bg cd-bg-1">
+    <main>
+      <div class="cd-fixed-bg cd-bg-1" id='loading'>
         <div class='container'>
           <h1 class='text-center'> <img src='/assets/img/icon_loader.gif'><br>Loading ... </h1>
         </div>
       </div>
-    </main>
-    <main id='main'>
       <a id='top'></a>
-      <div class="cd-fixed-bg cd-bg-1">
-        <div class='container padding-top-300'>
+      <div class="cd-fixed-bg cd-bg-1" id='main_contents' >
+        <div class='container'>
           <h1 class='text-center'> - Chat Service- </h1>
-          <div class='text-center'>
-          <a class="btn btn-primary" href='#signin'>サインイン</a>
-          <a class="btn btn-primary" href='#signup'>サインアップ</a>
-          </div>
-        </div>
-      </div>
+          <!-- <div class='text-center'> -->
 
-      <a id='signin'></a>
-      <div class="cd-scrolling-bg cd-color-1">
-        <div class="cd-container container-login">
-          <form id='signin_form'>
-            <h2>サインイン</h2>
-            <div class="form-group">
-              <input type="email" class="form-control" id='signin_email' placeholder='メールアドレス...'/>
-            </div>
-            <div class="form-group">
-              <input type="password" class="form-control" id='signin_password' placeholder='パスワード...'>
-            </div>
-            <div class="form-group">
-              <button class="btn btn-primary" type='submit'>サインイン</button>
-            </div>
-            <div class="form-group">
-              <a href='#reminder'>パスワードを忘れた方</a>
-            </div>
-            <div class="form-group">
-              <a href='#top'>トップへ戻る</a>
-            </div>
-          </form>
+            <form id='signin_form'>
+              <h2>サインイン</h2>
+
+              <div class="cp_iptxt">
+                <input class="ef" type="email" placeholder="" id='signin_email' required>
+                <label>メールアドレス</label>
+                <span class="focus_line"></span>
+              </div>
+
+              <div class="cp_iptxt">
+                <input class="ef" type="password" placeholder="" id='signin_password' required>
+                <label>パスワード</label>
+                <span class="focus_line"></span>
+              </div>
+
+              <div class="text-center">
+                <button class="btn btn--blue" type='submit'>サインイン</button>
+              </div>
+              <div class="text-center">
+                <a href='#reminder'>パスワードを忘れた方</a>
+              </div>
+            </form>
+
+            <a class="btn btn--blue" href='#signup'>アカウントのない方</a>
+          <!-- </div> -->
         </div>
       </div>
 
       <a id='signup'></a>
-      <div class="cd-scrolling-bg cd-color-2">
-        <div class="cd-container container-login">
+      <div class="cd-fixed-bg cd-color-2">
+        <div class="cd-container container">
           <form id='signup_form'>
             <h2>サインアップ</h2>
-            <div class="form-group">
-              <input type="email" class="form-control" id='signup_email' placeholder='メールアドレス...'/>
+
+            <div class="cp_iptxt">
+              <input class="ef" type="email" placeholder="" id='signup_email' required>
+              <label>メールアドレス</label>
+              <span class="focus_line"></span>
             </div>
-            <div class="form-group">
-              <input type="password" class="form-control" id='signup_password' placeholder='パスワード...'>
+
+            <div class="cp_iptxt">
+              <input class="ef" type="password" placeholder="" id='signup_password' required>
+              <label>パスワード</label>
+              <span class="focus_line"></span>
             </div>
-            <div class="form-group">
-              <button class="btn btn-primary" type='submit'>サインアップ</button>
+
+            <div class="cp_iptxt">
+              利用規約に <input type="checkbox" name="agreement" id="agreement" value="1" required /><label for="agreement">同意する</label>
             </div>
-            <div class="form-group">
-              <a href='#signin''>サインイン</a>
+
+            <div class="text-center">
+              <button class="btn btn--blue" type='submit'>サインアップ</button>
             </div>
-            <div class="form-group">
-              <a href='#top'>トップへ戻る</a>
+
+            <div class="text-center">
+              <a href='#top'>サインイン</a>
             </div>
           </form>
         </div>
       </div>
 
       <a id='reminder'></a>
-      <div class="cd-scrolling-bg cd-color-3">
-        <div class="cd-container container-login">
+      <div class="cd-fixed-bg cd-color-3">
+        <div class="cd-container container">
           <form id='reset_password_form'>
             <h2>パスワードをリセット</h2>
-            <div class="form-group">
-              <input type="email" class="form-control" id='reset_password_email' placeholder='メールアドレス...'/>
+
+            <div class="cp_iptxt">
+              <input class="ef" type="email" placeholder="" id='reset_password_email' required>
+              <label>メールアドレス</label>
+              <span class="focus_line"></span>
             </div>
-            <div class="form-group">
-              <button class="btn btn-primary" type='submit'>パスワード変更</button>
+
+            <div class="text-center">
+              <button class="btn btn--blue" type='submit'>パスワード変更</button>
             </div>
-            <div class="form-group">
-              <a href='#signin'>サインイン</a>
-            </div>
-            <div class="form-group">
+
+            <div class="text-center">
               <a href='#signup' >サインアップ</a>
             </div>
-            <div class="form-group">
-              <a href='#top'>トップへ戻る</a>
+            <div class="text-center">
+              <a href='#top'>サインイン</a>
             </div>
+
           </form>
         </div>
       </div>
@@ -115,7 +124,7 @@
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script> -->
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="/__/firebase/7.22.0/firebase-app.js"></script>

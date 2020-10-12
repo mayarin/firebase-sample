@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <style>
+
+body, html, main {
+  /* important */
+  height: 100%;
+}
+
+body {
+  overflow-y:hidden;
+  position:relative;
+}
+
+.cd-fixed-bg {
+  min-height: 100%;
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.cd-scrolling-bg {
+  min-height: 100%;
+}
+
+.container {
+  padding-top:300px;
+  width: calc(100% - 2*var(--component-padding));
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cd-color-1 {
+  background-color: lightcoral;
+}
+
+.cd-color-2 {
+  background-color:lightblue;
+}
+
+.cd-color-3 {
+  background-color: lightyellow;
+}
+
+    </style>
+
+  </head>
+
+  <body>
+    <main id='main'>
+      <a id='top'></a>
+      <div class="cd-fixed-bg cd-color-1">
+        <div class='container padding-top-300'>
+          <h1 class='text-center'> １ページ </h1>
+          <div class='text-center'>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </div>
+          <div class='text-center'>
+            <a class="btn btn-primary" href='#2page'>２ページ</a>
+            <a class="btn btn-primary" href='#3page'>３ページ</a>
+          </div>
+        </div>
+      </div>
+
+      <a id='2page'></a>
+      <div class="cd-scrolling-bg cd-color-2">
+        <div class="cd-container container">
+          <div class='text-center'>
+            <a class="btn btn-primary" href='#top'>１ページ</a>
+          </div>
+          <h2>２ページ</h2>
+          <div class='text-center'>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </div>
+          <div class='text-center'>
+            <a class="btn btn-primary" href='#3page'>３ページ</a>
+          </div>
+        </div>
+      </div>
+
+      <a id='3page'></a>
+      <div class="cd-scrolling-bg cd-color-3">
+        <div class="cd-container container">
+          <div class='text-center'>
+            <a class="btn btn-primary" href='#top'>１ページ</a>
+            <a class="btn btn-primary" href='#2page'>２ページ</a>
+          </div>
+          <h2>３ページ</h2>
+          <div class='text-center'>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
