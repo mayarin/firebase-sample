@@ -1,12 +1,127 @@
 var any_chat_parts = getElemID('any_chat_parts_template').innerHTML;
 var my_chat_parts = getElemID('my_chat_parts_template').innerHTML;
 var users_parts = getElemID('users_parts_template').innerHTML;
+var users_replace_parts = getElemID('replace_to_div_id').innerHTML;
 
 getElemID('any_chat_parts_template').remove();
 getElemID('my_chat_parts_template').remove();
 getElemID('users_parts_template').remove();
 
 fadeIn(document.body, 20);
+
+var $sampleAElements = document.getElementsByClassName( "chat_link" );
+for( var $i = 0; $i < $sampleAElements.length; $i++ ) {
+  $sampleAElements[$i].onclick = function () {
+    if(chat_with_uid === null ||
+      (chat_with_uid !== null && confirm('個人チャットを退出します。よろしいですか？'))){
+      document.getElementById('chat_area').style.display='block';
+      document.getElementById('users_window').style.display='none';
+      document.getElementById('update_window').style.display='none';
+      document.getElementById('mailaddress_window').style.display='none';
+      document.getElementById('password_window').style.display='none';
+      document.getElementById('remove_window').style.display='none';
+
+      document.getElementById('user_chat_window').style.display='none';
+      document.getElementById('user_chat_window_area').innerHTML='';
+      chat_with_uid = null;
+    }
+  }
+}
+
+var $sampleAElements = document.getElementsByClassName( "users_link" );
+for( var $i = 0; $i < $sampleAElements.length; $i++ ) {
+  $sampleAElements[$i].onclick = function () {
+    if(chat_with_uid === null ||
+      (chat_with_uid !== null && confirm('個人チャットを退出します。よろしいですか？'))){
+      document.getElementById('chat_area').style.display='none';
+      document.getElementById('users_window').style.display='block';
+      document.getElementById('update_window').style.display='none';
+      document.getElementById('mailaddress_window').style.display='none';
+      document.getElementById('password_window').style.display='none';
+      document.getElementById('remove_window').style.display='none';
+
+      document.getElementById('user_chat_window').style.display='none';
+      document.getElementById('user_chat_window_area').innerHTML='';
+      chat_with_uid = null;
+    }
+  }
+}
+
+var $sampleAElements = document.getElementsByClassName( "profile_link" );
+for( var $i = 0; $i < $sampleAElements.length; $i++ ) {
+  $sampleAElements[$i].onclick = function () {
+    if(chat_with_uid === null ||
+      (chat_with_uid !== null && confirm('個人チャットを退出します。よろしいですか？'))){
+      document.getElementById('chat_area').style.display='none';
+      document.getElementById('users_window').style.display='none';
+      document.getElementById('update_window').style.display='block';
+      document.getElementById('mailaddress_window').style.display='none';
+      document.getElementById('password_window').style.display='none';
+      document.getElementById('remove_window').style.display='none';
+
+      document.getElementById('user_chat_window').style.display='none';
+      document.getElementById('user_chat_window_area').innerHTML='';
+      chat_with_uid = null;
+    }
+  }
+}
+
+var $sampleAElements = document.getElementsByClassName( "mailaddress_link" );
+for( var $i = 0; $i < $sampleAElements.length; $i++ ) {
+  $sampleAElements[$i].onclick = function () {
+    if(chat_with_uid === null ||
+      (chat_with_uid !== null && confirm('個人チャットを退出します。よろしいですか？'))){
+      document.getElementById('chat_area').style.display='none';
+      document.getElementById('users_window').style.display='none';
+      document.getElementById('update_window').style.display='none';
+      document.getElementById('mailaddress_window').style.display='block';
+      document.getElementById('password_window').style.display='none';
+      document.getElementById('remove_window').style.display='none';
+
+      document.getElementById('user_chat_window').style.display='none';
+      document.getElementById('user_chat_window_area').innerHTML='';
+      chat_with_uid = null;
+    }
+  }
+}
+
+var $sampleAElements = document.getElementsByClassName( "password_link" );
+for( var $i = 0; $i < $sampleAElements.length; $i++ ) {
+  $sampleAElements[$i].onclick = function () {
+    if(chat_with_uid === null ||
+      (chat_with_uid !== null && confirm('個人チャットを退出します。よろしいですか？'))){
+      document.getElementById('chat_area').style.display='none';
+      document.getElementById('users_window').style.display='none';
+      document.getElementById('update_window').style.display='none';
+      document.getElementById('mailaddress_window').style.display='none';
+      document.getElementById('password_window').style.display='block';
+      document.getElementById('remove_window').style.display='none';
+
+      document.getElementById('user_chat_window').style.display='none';
+      document.getElementById('user_chat_window_area').innerHTML='';
+      chat_with_uid = null;
+    }
+  }
+}
+
+var $sampleAElements = document.getElementsByClassName( "remove_link" );
+for( var $i = 0; $i < $sampleAElements.length; $i++ ) {
+  $sampleAElements[$i].onclick = function () {
+    if(chat_with_uid === null ||
+      (chat_with_uid !== null && confirm('個人チャットを退出します。よろしいですか？'))){
+      document.getElementById('chat_area').style.display='none';
+      document.getElementById('users_window').style.display='none';
+      document.getElementById('update_window').style.display='none';
+      document.getElementById('mailaddress_window').style.display='none';
+      document.getElementById('password_window').style.display='none';
+      document.getElementById('remove_window').style.display='block';
+
+      document.getElementById('user_chat_window').style.display='none';
+      document.getElementById('user_chat_window_area').innerHTML='';
+      chat_with_uid = null;
+    }
+  }
+}
 
 // ログイン判別
 firebase.auth().onAuthStateChanged(function(user) {
@@ -34,20 +149,27 @@ firebase.auth().onAuthStateChanged(function(user) {
       snapshot.docChanges().forEach(function(change) {
         console.log(change.type);
         var message = change.doc.data();
+        // console.log(change.doc.id);
+        if(change.type == 'added'){
+          var line = '';
 
-        var line = '';
+          if(message.uid == user.uid){
+            line = my_chat_parts;
+          } else {
+            line = any_chat_parts;
+          }
 
-        if(message.uid == user.uid){
-          line = my_chat_parts;
+          line = line.replace('replace_to_chat_id', 'chat_'+message.uid);
+          line = line.replace('replace_to_message', message.message);
+          line = line.replace('replace_to_datetime', message.datetime);
+          line = line.replace('replace_to_name', message.name);
+          line = line.replace('replace_to_img_class_name', 'chat_profile_picture_'+message.uid);
+          line = line.replace('/assets/img/unnamed.png', message.picture);
+          getElemID('chat_window').innerHTML += line;
+
         } else {
-          line = any_chat_parts;
+          getElemID('chat_'+message.uid).remove;
         }
-
-        line = line.replace('replace_to_message', message.message);
-        line = line.replace('replace_to_datetime', message.datetime);
-        line = line.replace('replace_to_name', message.name);
-        line = line.replace('/assets/img/unnamed.png', message.picture);
-        getElemID('chat_window').innerHTML += line;
 
       });
       getElemID('chat_window').scrollTop = getElemID('chat_window').scrollHeight;
@@ -67,11 +189,51 @@ firebase.auth().onAuthStateChanged(function(user) {
         var line = users_parts;
 
         if(message.uid != user.uid){
-          line = line.replace('replace_to_introduce', message.introduce);
-          line = line.replace('replace_to_gender', message.gender);
-          line = line.replace('replace_to_name', message.name);
-          line = line.replace('/assets/img/unnamed.png', message.picture);
-          getElemID('users_window').innerHTML += line;
+          // プロフィール画面へ描画します
+          if(change.type == 'added'){
+            //画面を開いて最初に追加された
+            line = line.replace('replace_to_div_id', 'user_'+message.uid);
+            line = line.replace('replace_to_id', message.uid);
+            line = line.replace('replace_to_introduce', message.introduce);
+            line = line.replace('replace_to_gender', message.gender);
+            line = line.replace('replace_to_name', message.name);
+            line = line.replace('/assets/img/unnamed.png', message.picture);
+            getElemID('users_window').innerHTML += line;
+
+          } else if(change.type == 'modified'){
+            // 画面を開いてから変更された
+            var parent = getElemID('user_'+message.uid);
+            var line = users_replace_parts;
+            line = line.replace('replace_to_introduce', message.introduce);
+            line = line.replace('replace_to_gender', message.gender);
+            line = line.replace('replace_to_name', message.name);
+            line = line.replace('/assets/img/unnamed.png', message.picture);
+
+            parent.innerHTML = line;
+
+            var elements = getElemClass('chat_profile_picture_'+message.uid);
+            Array.prototype.forEach.call(elements, function(element) {
+              console.log(element);
+              element.src = message.picture;
+            })
+
+          } else {
+            // 画面を開いてのち削除された
+            getElemID('user_'+message.uid).remove;
+          }
+
+        } else {
+          // update_introduce
+          getElemID('update_introduce').value = message.introduce;
+          getElemID('update_displayName').value = message.name;
+          getElemID('update_gender').value = message.gender;
+          getElemID('preview').src = message.picture;
+
+          var elements = getElemClass('chat_profile_picture_'+message.uid);
+          Array.prototype.forEach.call(elements, function(element) {
+            // console.log(element);
+            element.src = message.picture;
+          })
         }
 
       });
@@ -86,7 +248,13 @@ firebase.auth().onAuthStateChanged(function(user) {
 
     if(user.photoURL == null){
       alert('ご利用前にプロフィールを登録してください。');
-      window.location.hash = "update_area";
+      // window.location.hash = "update_area";
+      document.getElementById('chat_area').style.display='none';
+      document.getElementById('users_window').style.display='none';
+      document.getElementById('update_window').style.display='block';
+      document.getElementById('mailaddress_window').style.display='none';
+      document.getElementById('password_window').style.display='none';
+      document.getElementById('remove_window').style.display='none';
     }
   }
 });
@@ -104,7 +272,7 @@ document.querySelector("#chat_form").addEventListener("submit", function(event) 
   event.preventDefault();
 });
 
-function submitPost(){
+const submitPost = () => {
   var user = firebase.auth().currentUser;
   var db = firebase.firestore();
   var date = new Date();
@@ -145,6 +313,7 @@ document.querySelectorAll('.menu_auto_close').forEach(function (button) {
 
 // プロフィール更新
 document.querySelector("#update_form").addEventListener("submit", function(event) {
+  event.preventDefault();
   if(confirm('プロフィールを更新します。よろしいですか？')){
     document.querySelector('#update_form button').setAttribute('disabled', true);
     document.querySelector('#update_form button').innerText = '反映中...';
@@ -158,7 +327,8 @@ document.querySelector("#update_form").addEventListener("submit", function(event
       console.log(photoURLElement.length);
       for(var i=0;i<photoURLElement.length;i++){
         var file = photoURLElement[i];
-          var userName = user.uid+'_'+file.name;
+          // var userName = user.uid+'_'+file.name;
+          var userName = user.uid+'.jpg';
           console.log(userName);
           var storageRef = firebase.storage().ref(userName);
           var uploadTask = storageRef.put(file);
@@ -193,10 +363,9 @@ document.querySelector("#update_form").addEventListener("submit", function(event
       updateProfile(user.photoURL);
     }
   }
-  event.preventDefault();
 }, false);
 
-function updateProfile(photoURL){
+const updateProfile = (photoURL) => {
   var user = firebase.auth().currentUser;
   var displayName = getElementValue('update_displayName');
   var gender = getElementValue('update_gender');
@@ -221,7 +390,7 @@ function updateProfile(photoURL){
       document.getElementById('chat_message').value = '';
 
       alert('プロフィールを更新しました。');
-      location.reload();
+      // location.reload();
 
     })
     .catch(function(error) {
@@ -335,6 +504,34 @@ document.querySelector("#remove_account_form").addEventListener("submit", functi
       // User re-authenticated.
 
       user.delete().then(function() {
+        var db = firebase.firestore();
+        // チャットデータを削除
+        var openchatsRef = db.collection("openchats");
+        var query = openchatsRef.where("uid", "==", user.uid);
+        query.get()
+        .then(function(querySnapshot) {
+          querySnapshot.forEach(function(doc) {
+
+            db.collection("openchats").doc(doc.id).delete().then(function() {
+              console.log("Document successfully deleted!");
+            }).catch(function(error) {
+              console.error("Error removing document: ", error);
+            });
+            // // doc.data() is never undefined for query doc snapshots
+            // console.log(doc.id, " => ", doc.data());
+          });
+        })
+        .catch(function(error) {
+          console.log("Error getting documents: ", error);
+        });
+
+        // プロフィールデータを削除
+        db.collection("users").doc(user.uid).delete().then(function() {
+          console.log("Document successfully deleted!");
+        }).catch(function(error) {
+          console.error("Error removing document: ", error);
+        });
+
         alert('アカウントを削除しました。ご利用ありがとうございました。');
         firebase.auth().signOut();
       }).catch(function(error) {
@@ -370,27 +567,161 @@ document.querySelector("#logout_form").addEventListener("click", function(event)
   }
 }, false);
 
-function getElementValue(id){
-  return getElemID(id).value;
-}
 
-function getElemID(id){
-  return document.getElementById(id);
-}
-
-function getElemClass(name){
+const getElemClass = (name) => {
   return document.getElementsByClassName(name);
 }
 
 
-function previewImage(obj)
-{
-	var fileReader = new FileReader();
-	fileReader.onload = (function() {
-		document.getElementById('preview').src = fileReader.result;
-	});
-	fileReader.readAsDataURL(obj.files[0]);
+const previewImage = (obj) => {
+  var fileReader = new FileReader();
+  fileReader.onload = (function() {
+    document.getElementById('preview').src = fileReader.result;
+  });
+  fileReader.readAsDataURL(obj.files[0]);
 }
+
+var userchat_listener = firebase.firestore()
+.collection('userchats');
+var chat_with_uid = null;
+
+const chatwith = (uid) => {
+  console.log(uid);
+  chat_with_uid = uid;
+
+  document.getElementById('chat_area').style.display='none';
+  document.getElementById('users_window').style.display='none';
+  document.getElementById('update_window').style.display='none';
+  document.getElementById('mailaddress_window').style.display='none';
+  document.getElementById('password_window').style.display='none';
+  document.getElementById('remove_window').style.display='none';
+  //
+  document.getElementById('user_chat_window').style.display='block';
+
+  var user_info = getElemID('user_'+uid);
+
+  getElemID('user_chat_status_profile_picture').src = user_info.getElementsByClassName('profile_picture')[0].src;
+  // getElemID('user_chat_status_name').innerHTML = user_info.getElementsByClassName('user_list_name')[0].innerHTML;
+  getElemID('user_chat_message').placeholder = user_info.getElementsByClassName('user_list_name')[0].innerHTML + 'さんへのメッセージ...';
+
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      userchat_listener = firebase.firestore()
+      .collection('userchats')
+      .doc(user.uid)
+      .collection(uid)
+      .orderBy('datetime', 'asc');
+
+      userchat_listener.onSnapshot(function(snapshot) {
+        snapshot.docChanges().forEach(function(change) {
+          console.log(change.type);
+          var message = change.doc.data();
+          // console.log(change.doc.id);
+          if(change.type == 'added'){
+            var line = '';
+
+            if(message.uid == user.uid){
+              line = my_chat_parts;
+            } else {
+              line = any_chat_parts;
+            }
+
+            line = line.replace('replace_to_chat_id', 'user_chat_'+message.uid);
+            line = line.replace('replace_to_message', message.message);
+            line = line.replace('replace_to_datetime', message.datetime);
+            line = line.replace('replace_to_name', message.name);
+            line = line.replace('replace_to_img_class_name', 'chat_profile_picture_'+message.uid);
+            line = line.replace('/assets/img/unnamed.png', message.picture);
+            getElemID('user_chat_window_area').innerHTML += line;
+
+          } else {
+            getElemID('user_chat_'+message.uid).remove;
+          }
+
+        });
+        getElemID('user_chat_window_area').scrollTop = getElemID('user_chat_window_area').scrollHeight;
+      }, function(error) {
+        console.log(error.message );
+        // location.reload();
+      });
+    }
+  });
+}
+
+document.querySelector("#user_chat_message").addEventListener("keydown", function(event) {
+  if (((event.ctrlKey && !event.metaKey) || (!event.ctrlKey && event.metaKey)) && event.keyCode == 13) {
+    submitUserChat();
+  }
+});
+
+document.querySelector("#user_chat_form").addEventListener("submit", function(event) {
+  submitUserChat();
+  event.preventDefault();
+});
+
+const submitUserChat = () => {
+  var user = firebase.auth().currentUser;
+  var db = firebase.firestore();
+  var date = new Date();
+  var datetime = date.getFullYear() + '-' +
+                ( '00' + ( date.getMonth() +1 ) ).slice( -2 ) + '-' +
+                ( '00' + date.getDate() ).slice( -2 ) + ' ' +
+                ( '00' + date.getHours() ).slice( -2 ) + ':' +
+                ( '00' + date.getMinutes() ).slice( -2 ) + ':' +
+                ( '00' + date.getSeconds() ).slice( -2 );
+
+  var chat_message = getElementValue('user_chat_message');
+  chat_message = chat_message.replace(/\r\n/g, "<br />");
+  chat_message = chat_message.replace(/(\n|\r)/g, "<br />");
+
+  // chat_with_uid
+  // Add a new document in collection "cities"
+  db.collection("userchats").doc(user.uid).collection(chat_with_uid).doc().set({
+    uid: user.uid,
+    name: user.displayName,
+    message: chat_message,
+    picture: user.photoURL,
+    datetime : datetime
+  })
+  .then(function() {
+    console.log("Document successfully written!");
+
+    db.collection("userchats").doc(chat_with_uid).collection(user.uid).doc().set({
+      uid: user.uid,
+      name: user.displayName,
+      message: chat_message,
+      picture: user.photoURL,
+      datetime : datetime
+    })
+    .then(function() {
+      console.log("Document successfully written!");
+      document.getElementById('user_chat_message').value = '';
+    })
+    .catch(function(error) {
+      console.error("Error writing document: ", error);
+    });
+
+    document.getElementById('user_chat_message').value = '';
+  })
+  .catch(function(error) {
+    console.error("Error writing document: ", error);
+  });
+}
+
+document.querySelector("#user_chat_exit").addEventListener("click", function(event) {
+  if(confirm('個人チャットを退出します。よろしいですか？')){
+    document.getElementById('chat_area').style.display='block';
+    document.getElementById('users_window').style.display='none';
+    document.getElementById('update_window').style.display='none';
+    document.getElementById('mailaddress_window').style.display='none';
+    document.getElementById('password_window').style.display='none';
+    document.getElementById('remove_window').style.display='none';
+
+    document.getElementById('user_chat_window').style.display='none';
+    document.getElementById('user_chat_window_area').innerHTML='';
+    chat_with_uid = null;
+  }
+});
 
 
 

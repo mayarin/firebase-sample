@@ -12,7 +12,9 @@ body, html, main {
 
 body {
   overflow-y:hidden;
+  overflow-x:hidden;
   background-color: rgb(195, 224, 248);
+  font-family:"Hiragino Sans";
 }
 
 html {
@@ -22,7 +24,8 @@ html {
 }
 
 main {
-  position: absolute;
+  position: relative;
+  /* position: absolute; */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -37,16 +40,39 @@ main {
 @media only screen and (max-device-width: 480px) {
   main {
     width: 400px;
+    transform: translate(-50%, -63%);
   }
 }
 
 .cd-fixed-bg {
+  position: absolute;
+  display:block;
   min-height: 100%;
+  width:600px;
   background-size: cover;
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-position: center center;
 }
+
+@media only screen and (max-device-width: 480px) {
+  .cd-fixed-bg  {
+    width: 340px;
+  }
+}
+
+#main_contents {
+  z-index:30;
+}
+
+#signup_div {
+  z-index:20;
+}
+
+#reminder_div {
+  z-index:10;
+}
+
 
 .container {
   background-color: #fff;
@@ -91,6 +117,7 @@ a.btn--blue {
   background-color: #2a69dd;
   border: none;
 }
+
 .btn--blue:hover,
 a.btn--blue:hover {
   color: #fff;
@@ -104,6 +131,7 @@ a.btn--silver {
   background-color: #9c9ea1;
   border: none;
 }
+
 .btn--silver:hover,
 a.btn--silver:hover {
   color: #fff;
@@ -117,6 +145,7 @@ a.btn--red {
   background-color: #da3c41;
   border: none;
 }
+
 .btn--red:hover,
 a.btn--red:hover {
   color: #fff;
@@ -213,10 +242,10 @@ form {
   text-align: center;
 }
 
-#welcome {
-  transform: translate(0%, 35%);
+.padding-top-8px-margin-right-10px {
+  padding-top: 8px;
+  margin-right: 10px;
 }
-
 
 .h1 {
   margin-top: 20px;
@@ -247,7 +276,7 @@ form {
   border: 3px solid rgb(248, 106, 127);
 }
 
-#chat_window {
+.chat_window_css {
   border:1px solid gray;
   border-radius: 5px;
   height:600px;
@@ -255,7 +284,13 @@ form {
   padding: 10px;
   overflow-x: scroll;
   background-color: white;
-  margin-top: -15px;
+  margin-top: -30px;
+}
+
+@media only screen and (max-device-height: 812px) {
+  .chat_window_css {
+    height:500px;
+  }
 }
 
 #preview {
@@ -298,42 +333,42 @@ form {
   margin-left: auto;
 }
 
-#chat_form_div {
+.chat_form_div_css {
   padding-top:5px !important;
   max-width: 700px;
   padding-left: 0px;
   padding-right: 0px;
 }
 
-#chat_form_div form {
+.chat_form_div_css form {
   padding: 0px;
 }
 
-#chat_form_div button {
+.chat_form_div_css button {
   margin-left: 1%;
   margin-right: auto;
 }
 
 @media only screen and (max-device-width: 480px) {
-  #chat_form_div button {
+  .chat_form_div_css button {
     padding:9px;
   }
 }
 
-#chat_form_div textarea {
+.chat_form_div_css textarea {
   border:1px solid gray;
   border-radius: 5px;
-  width: 78%;
+  width: 76%;
   padding:3px;
 }
 
-#chat_message {
+.chat_message_css {
   max-width: 88%;
-  padding: 5px;
+  padding: 3px 6px 3px 6px !important;
 }
 
 @media only screen and (max-device-width: 480px) {
-  #chat_message {
+  .chat_message_css {
     max-width: 79%;
   }
 }
@@ -365,6 +400,10 @@ form {
   float: left;
 }
 
+.right-box{
+  float: right;
+}
+
 .margin-5{
   margin: 5px;
 }
@@ -383,7 +422,13 @@ form {
   padding: 10px;
   overflow-x: scroll;
   max-width: 700px;
-  margin-top : 10px;
+  /* margin-top : -30px; */
+}
+
+@media only screen and (max-device-width: 480px) {
+  #users_window {
+    height: 550px;
+  }
 }
 
 .user_list_parts {
@@ -431,7 +476,7 @@ form {
   width: 60%;
   /* top: 50%; */
   left: 50%;
-  transform: translate(-50%, 0%);
+  transform: translate(-55%, 0%);
 }
 
 @media only screen and (max-device-width: 480px) {
@@ -485,8 +530,15 @@ form {
 }
 
 .already_login{
-  transform: translate(0%, 15%);
   border : none;
+  transform: translate(0%, 18%);
+}
+
+@media only screen and (max-device-width: 480px) {
+  .already_login{
+    transform: translate(0%, 35%);
+  }
+
 }
 
 .form-group {
@@ -507,12 +559,10 @@ form {
   margin-top: 10px;
 }
 
-@media only screen and (max-device-width: 480px) {
+/* @media only screen and (max-device-width: 480px) {
   #update_form {
-    height: 650px;
   }
-
-}
+} */
 
 #update_form .form-control,
 #update_mailaddress_form .form-control,
@@ -554,4 +604,39 @@ form {
   font-size: inherit;
   width:100px;
   padding: 10px;
+}
+
+.container-settings  {
+  margin-top: -40px;
+}
+
+@media only screen and (max-device-width: 480px) {
+  .container-settings {
+    height: 650px;
+  }
+}
+
+.padding-top-8px {
+  padding-top: 8px;
+}
+
+#user_chat_status_profile_picture {
+  width: 25px;
+  height: 25px;
+}
+
+#user_chat_exit {
+  color:mediumblue;
+  text-decoration: mediumblue underline;
+  cursor:default;
+}
+
+#user_chat_message{
+  width:70%;
+}
+
+.user_list_into_chat {
+  color:mediumblue;
+  text-decoration: mediumblue underline;
+  cursor:default;
 }

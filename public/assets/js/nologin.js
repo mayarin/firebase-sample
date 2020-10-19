@@ -1,10 +1,38 @@
-function getElementValue(id){
+const getElementValue = (id) => {
   return getElemID(id).value;
 }
 
-function getElemID(id){
+const getElemID = (id) => {
   return document.getElementById(id);
 }
+
+var $sampleAElements = document.getElementsByClassName( "signup_link" );
+for( var $i = 0; $i < $sampleAElements.length; $i++ ) {
+  $sampleAElements[$i].onclick = function () {
+    document.getElementById('signin_div').style.display='none';
+    document.getElementById('signup_div').style.display='block';
+    document.getElementById('reminder_div').style.display='none';
+  }
+}
+
+var $sampleAElements = document.getElementsByClassName( "signin_link" );
+for( var $i = 0; $i < $sampleAElements.length; $i++ ) {
+  $sampleAElements[$i].onclick = function () {
+    document.getElementById('signin_div').style.display='block';
+    document.getElementById('signup_div').style.display='none';
+    document.getElementById('reminder_div').style.display='none';
+  }
+}
+
+var $sampleAElements = document.getElementsByClassName( "remind_link" );
+for( var $i = 0; $i < $sampleAElements.length; $i++ ) {
+  $sampleAElements[$i].onclick = function () {
+    document.getElementById('signin_div').style.display='none';
+    document.getElementById('signup_div').style.display='none';
+    document.getElementById('reminder_div').style.display='block';
+  }
+}
+
 
 // パスワード変更リンク取得
 document.querySelector("#reset_password_form").addEventListener("submit", function(event) {
@@ -48,6 +76,7 @@ document.querySelector("#signin_form").addEventListener("submit", function(event
   var auth = firebase.auth();
   var emailAddress = getElementValue("signin_email");
   var password = getElementValue("signin_password");
+  console.log('L55');
 
   firebase.auth().signInWithEmailAndPassword(emailAddress, password).catch(function(error) {
     // Handle Errors here.
@@ -59,7 +88,7 @@ document.querySelector("#signin_form").addEventListener("submit", function(event
   event.preventDefault();
 }, false);
 
-
+// サインイン済画面へ遷移
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     var xhr = new XMLHttpRequest(),
@@ -94,7 +123,7 @@ firebase.auth().onAuthStateChanged(function(user) {
   }
 });
 
-function loadScript(src, callback) {
+const loadScript = (src, callback) => {
   var done = false;
   var head = document.getElementsByTagName('head')[0];
   var script = document.createElement('script');
@@ -123,7 +152,7 @@ function loadScript(src, callback) {
  * @param {Number} [time=400] 効果時間（ミリ秒で指定）
  * @param {Function} [callback] 完了後のコールバック関数
  */
-var fadeIn = function(element, time, callback) {
+const fadeIn = (element, time, callback) => {
   var fadeTime     = (time) ? time : 400,
     keyFrame     = 30,
     stepTime     = fadeTime / keyFrame,
@@ -178,7 +207,7 @@ var fadeIn = function(element, time, callback) {
 * @param {Number} [time=400] 効果時間（ミリ秒で指定）
 * @param {Function} [callback] 完了後のコールバック関数
 */
-var fadeOut = function(element, time, callback) {
+const fadeOut = (element, time, callback) => {
   var fadeTime     = (time) ? time : 400,
       keyFrame     = 30,
       stepTime     = fadeTime / keyFrame,
