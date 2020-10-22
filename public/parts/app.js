@@ -552,8 +552,6 @@ document.querySelector("#remove_account_form").addEventListener("submit", functi
         // Uh-oh, an error occurred!
       });
 
-
-
     }).catch(function(error) {
       console.log(error.line);
       console.log("Transaction failed: ", error);
