@@ -531,13 +531,28 @@ document.querySelector("#remove_account_form").addEventListener("submit", functi
       });
     }).then(function() {
 
-      user.reauthenticateWithCredential(credential).then(function() {
-        user.delete().then(function() {
-          alert('アカウントを削除しました。ご利用ありがとうございました。');
-          firebase.auth().signOut();
-          location.reload();
+      // Create a reference to the file to delete
+      console.log(user.photoURL);
+      var storageRef = firebase.storage().refFromURL(user.photoURL);
+      // var desertRef = storageRef.child(user.photoURL);
+
+      // Delete the file
+      storageRef.delete().then(function() {
+        // File deleted successfully
+        console.log('File deleted successfully');
+
+        user.reauthenticateWithCredential(credential).then(function() {
+          user.delete().then(function() {
+            alert('アカウントを削除しました。ご利用ありがとうございました。');
+            firebase.auth().signOut();
+            location.reload();
+          });
         });
+      }).catch(function(error) {
+        // Uh-oh, an error occurred!
       });
+
+
 
     }).catch(function(error) {
       console.log(error.line);
