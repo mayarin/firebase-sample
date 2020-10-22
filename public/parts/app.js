@@ -390,6 +390,7 @@ const updateProfile = (photoURL) => {
       document.getElementById('chat_message').value = '';
 
       alert('プロフィールを更新しました。');
+      getElemID('header_picture').src = photoURL;
       // location.reload();
 
     })
@@ -490,9 +491,15 @@ document.querySelector("#update_password_form").addEventListener("submit", funct
 
 // アカウント削除
 document.querySelector("#remove_account_form").addEventListener("submit", function(event) {
+  event.preventDefault();
   if(confirm('アカウントを削除します。本当によろしいですか？')){
     document.querySelector('#remove_account_form button').setAttribute('disabled', true);
     document.querySelector('#remove_account_form button').innerText = '削除中...';
+
+    var user = firebase.auth().currentUser;
+    var db = firebase.firestore();
+    // チャットデータを削除
+    // var openchatsRef = db.collection("openchats");
 
     var user = firebase.auth().currentUser;
     var credential = firebase.auth.EmailAuthProvider.credential(
@@ -500,51 +507,43 @@ document.querySelector("#remove_account_form").addEventListener("submit", functi
       getElementValue('remove_account_password')
     );
 
-    user.reauthenticateWithCredential(credential).then(function() {
-      // User re-authenticated.
+    const openchatsRef = db.collection('openchats'); // .where("uid", "==", user.uid)
+    const usersRef = db.collection('users').doc(user.uid);
 
-      user.delete().then(function() {
-        var db = firebase.firestore();
-        // チャットデータを削除
-        var openchatsRef = db.collection("openchats");
-        var query = openchatsRef.where("uid", "==", user.uid);
+    return db.runTransaction(function(transaction) {
+      // This code may get re-run multiple times if there are conflicts.
+      var query = openchatsRef.where("uid", "==", user.uid);
         query.get()
-        .then(function(querySnapshot) {
+        .then(async function(querySnapshot) {
           querySnapshot.forEach(function(doc) {
+            console.log(doc.id);
 
-            db.collection("openchats").doc(doc.id).delete().then(function() {
-              console.log("Document successfully deleted!");
-            }).catch(function(error) {
-              console.error("Error removing document: ", error);
+            return transaction.get(openchatsRef.doc(doc.id)).then(function(sfDoc) {
+              transaction.delete(openchatsRef.doc(doc.id));
             });
-            // // doc.data() is never undefined for query doc snapshots
-            // console.log(doc.id, " => ", doc.data());
           });
-        })
-        .catch(function(error) {
-          console.log("Error getting documents: ", error);
+          // console.log(querySnapshot.docs);
         });
 
-        // プロフィールデータを削除
-        db.collection("users").doc(user.uid).delete().then(function() {
-          console.log("Document successfully deleted!");
-        }).catch(function(error) {
-          console.error("Error removing document: ", error);
-        });
+      return transaction.get(usersRef).then(function(sfDoc) {
+        transaction.delete(usersRef);
 
-        alert('アカウントを削除しました。ご利用ありがとうございました。');
-        firebase.auth().signOut();
-      }).catch(function(error) {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        alert(errorCode + ', ' + errorMessage);
+      });
+    }).then(function() {
+
+      user.reauthenticateWithCredential(credential).then(function() {
+        user.delete().then(function() {
+          alert('アカウントを削除しました。ご利用ありがとうございました。');
+          firebase.auth().signOut();
+          location.reload();
+        });
       });
 
     }).catch(function(error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      alert(errorCode + ', ' + errorMessage);
+      console.log(error.line);
+      console.log("Transaction failed: ", error);
     });
+
   }
 
   event.preventDefault();
