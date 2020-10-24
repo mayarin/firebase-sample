@@ -148,6 +148,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     openchats_query.onSnapshot(function(snapshot) {
       snapshot.docChanges().forEach(function(change) {
         console.log(change.type);
+        // console.log(change.doc.id);
         var message = change.doc.data();
         // console.log(change.doc.id);
         if(change.type == 'added'){
@@ -159,7 +160,7 @@ firebase.auth().onAuthStateChanged(function(user) {
             line = any_chat_parts;
           }
 
-          line = line.replace('replace_to_chat_id', 'chat_'+message.uid);
+          line = line.replace('replace_to_chat_id', 'chat_'+change.doc.id);
           line = line.replace('replace_to_message', message.message);
           line = line.replace('replace_to_datetime', message.datetime);
           line = line.replace('replace_to_name', message.name);
@@ -168,7 +169,8 @@ firebase.auth().onAuthStateChanged(function(user) {
           getElemID('chat_window').innerHTML += line;
 
         } else {
-          getElemID('chat_'+message.uid).remove;
+          console.log('chat_'+change.doc.id);
+          getElemID('chat_'+change.doc.id).remove();
         }
 
       });
